@@ -36,10 +36,3 @@ pub fn add_two_numbers(
         }
     }
 }
-
-mod test {
-    #[test]
-    fn add_two_numbers1() {
-        assert_eq!(add_two_numbers(l1, l2), l3)
-    }
-}
