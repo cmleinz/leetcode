@@ -1,3 +1,13 @@
+/// Returns the indicies of the numbers in nums whose sum equals the target
+/// 
+/// # Arguments 
+/// 
+/// * `nums` a vector of i32
+/// * `target` an i32 which is the sum of two of the numbers in nums
+/// 
+/// # Explanation 
+/// 
+/// We loop over the list of i32s and search the remainder of the numbers in the vector for an i32 equal to the target - the current value.
 pub fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {
     for (i, num) in nums.iter().enumerate() {
         match nums.iter().skip(i+1).position(|&q| q == target - num ) {
