@@ -12,27 +12,28 @@ impl ListNode {
     }
 }
 
+type BoxNode = Option<Box<ListNode>>;
+
 pub fn add_two_numbers(
     l1: Option<Box<ListNode>>,
     l2: Option<Box<ListNode>>,
 ) -> Option<Box<ListNode>> {
-    match (l1, l2) {
-        (None, None) => None,
-        (Some(l1), None) => Some(l1),
-        (None, Some(l2)) => Some(l2),
-        (Some(l1), Some(l2)) => {
-            let sum = l1.val + l2.val;
-            if sum < 10 {
-                Some(Box::new(ListNode {
-                    val: sum,
-                    next: add_two_numbers(l1.next, l2.next),
-                }))
-            } else {
-                Some(Box::new(ListNode {
-                    val: sum - 10,
-                    next: add_two_numbers(Some(Box::new(ListNode::new(1))), l1.next),
-                }))
-            }
-        }
+    merge_nodes(l1, l2, 0, ListNode::new(-1))
+}
+
+pub fn merge_nodes(mut l1: BoxNode, mut l2: BoxNode, mut val: i32, mut out: ListNode) -> BoxNode {
+    if l1.is_none() && l2.is_none() && val == 10 {
+        return None;
     }
+    if let Some(l1_node) = l1 {
+        val += l1_node.val;
+        l1 = l1_node.next 
+    }
+    if let Some(l2_node) = l2 {
+        val += l2_node.val;
+        l2 = l2_node.next 
+    } 
+    out.val = val % 10;
+    out.next = merge_nodes(l1, l2, val / 10, ListNode::new(-1));
+    Some(Box::new(out))
 }
